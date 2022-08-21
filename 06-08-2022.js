@@ -22,12 +22,28 @@
 // try not to modify the input list of distances ls
 // in some languages this "list" is in fact a string (see the Sample Tests).
 
+
+//Solucion encontrada en la respuesta
 function chooseBestSum(t, k, ls) {
-    let array = array(k)
-        
-      for(let i = 0; i < array.length ; i++){
-        
+  let biggestNumber = 0,
+      sumOfElement = (numberSoFar,lastIndex)=>{
+        numberSoFar = numberSoFar || []
+        if(numberSoFar.length === k){
+          let sum = numberSoFar.reduce((a,b)=>a+b)
+            if(sum <= t && sum > biggestNumber){
+              biggestNumber = sum
+            }
+            numberSoFar.splice(numberSoFar.length-1, 1)
+        }
+
+        for(let i = lastIndex + 1 || 0; i < ls.length; i++){
+            sumOfElement(numberSoFar.concat(ls[i]),i)
+        }
       }
-    
-      // your code
-  }
+
+      sumOfElement()
+
+      return biggestNumber
+}
+
+chooseBestSum(163, 3,[50, 55, 56, 57, 58])
